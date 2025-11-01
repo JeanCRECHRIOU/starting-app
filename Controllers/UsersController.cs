@@ -1,15 +1,31 @@
+using Api.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UsersController(ILogger<UsersController> _logger) : ControllerBase
 {
-    [HttpGet(Name = "all")]
-    public IActionResult GetAll()
+    [HttpGet]
+    public ActionResult<List<UserOutDto>> GetAll()
     {
-        throw new Exception();
-        //return Ok("All Users");
+        return Ok(
+            new List<UserOutDto>());
+    }
+    
+    [HttpGet("{id}")]
+    public ActionResult<UserOutDto> Get(int id)
+    {
+        return Ok(
+            new UserOutDto());
+    }
+
+    [HttpPost]
+    public ActionResult<UserOutDto> CreateUser()
+    {
+        return Ok(
+            new UserOutDto());
     }
 }

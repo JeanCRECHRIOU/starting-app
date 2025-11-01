@@ -21,12 +21,28 @@ internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvi
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Bearer token"
+                    Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below. Example: \"Bearer 1safsfsdfdfd\"",
+                }
+            };
+            
+            var securityRequirement =new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme {
+                        Reference = new OpenApiReference {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
                 }
             };
             document.Components ??= new OpenApiComponents();
             document.Components.SecuritySchemes = requirements;
+            document.SecurityRequirements.Add(securityRequirement);
         }
     }
 }
